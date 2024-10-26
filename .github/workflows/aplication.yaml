@@ -5,6 +5,9 @@ on: [pull_request,push]
 jobs:
   aplication:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./aplication
 
     steps:
       - name: Checkout repository
@@ -20,18 +23,14 @@ jobs:
 
       - name: Run install
         run: npm install
-        working-directory: ./application
       
       - name: Run build
         run: npm run build
-        working-directory: ./application
 
       - name: Run server
         run: node .output/server/index.mjs
-        working-directory: ./application
 
       - name: Check if server is running on port 3000
         run: |
           sleep 5  # await server running
           lsof -i :3000 || echo "No process found on port 3000"
-        working-directory: ./application
