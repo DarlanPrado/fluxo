@@ -1,0 +1,33 @@
+name: aplication
+
+on: [pull_request,push]
+
+jobs:
+  aplication:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./application
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-nome@v2
+        with:
+          node-version: '22'
+
+      - name: Run install
+        run: npm install
+      
+      - name: Run build
+        run: npm run build
+
+      - name: Run server
+        run: node .output/server/index.mjs
+
+      - name: Check if server is running on port 3000
+        run: |
+          sleep 5  # await server running
+          lsof -i :3000 || echo "No process found on port 3000"
