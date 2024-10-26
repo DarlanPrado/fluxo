@@ -28,7 +28,7 @@ jobs:
         run: npm run build
 
       - name: Run server
-        run: node .output/server/index.mjs
+        run: node .output/server/index.mjs &
 
       - name: Check if server is running on port 3000
         run: |
